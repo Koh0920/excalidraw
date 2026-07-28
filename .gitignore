@@ -14,6 +14,8 @@
 *.tgz
 build
 dist
+!excalidraw-app/build/
+!excalidraw-app/build/**
 firebase
 logs
 node_modules

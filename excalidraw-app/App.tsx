@@ -7,6 +7,7 @@ import {
   useEditorInterface,
   ExcalidrawAPIProvider,
   useExcalidrawAPI,
+  convertToExcalidrawElements,
 } from "@excalidraw/excalidraw";
 import { trackEvent } from "@excalidraw/excalidraw/analytics";
 import { getDefaultAppState } from "@excalidraw/excalidraw/appState";
@@ -212,6 +213,77 @@ const shareableLinkConfirmDialog = {
   color: "danger",
 } as const;
 
+const createAtoDemoScene = (): ExcalidrawInitialDataState => ({
+  elements: convertToExcalidrawElements([
+    {
+      type: "text",
+      id: "ato-title",
+      x: 265,
+      y: 20,
+      text: "Ato product flow",
+      fontSize: 32,
+      strokeColor: "#1e1e1e",
+    },
+    {
+      type: "rectangle",
+      id: "ato-idea",
+      x: 80,
+      y: 120,
+      width: 180,
+      height: 100,
+      backgroundColor: "#fff3bf",
+      fillStyle: "solid",
+      label: { text: "Idea", fontSize: 28 },
+    },
+    {
+      type: "arrow",
+      id: "ato-arrow-design",
+      x: 260,
+      y: 170,
+      width: 150,
+      height: 0,
+      endArrowhead: "arrow",
+    },
+    {
+      type: "rectangle",
+      id: "ato-design",
+      x: 410,
+      y: 120,
+      width: 180,
+      height: 100,
+      backgroundColor: "#a5d8ff",
+      fillStyle: "solid",
+      label: { text: "Design", fontSize: 28 },
+    },
+    {
+      type: "arrow",
+      id: "ato-arrow-ship",
+      x: 590,
+      y: 170,
+      width: 150,
+      height: 0,
+      endArrowhead: "arrow",
+    },
+    {
+      type: "diamond",
+      id: "ato-ship",
+      x: 740,
+      y: 110,
+      width: 180,
+      height: 120,
+      backgroundColor: "#b2f2bb",
+      fillStyle: "solid",
+      label: { text: "Ship", fontSize: 28 },
+    },
+  ]),
+  appState: {
+    ...getDefaultAppState(),
+    name: "Ato Product Flow",
+    viewBackgroundColor: "#f8f9fa",
+  },
+  scrollToContent: true,
+});
+
 const initializeScene = async (opts: {
   collabAPI: CollabAPI | null;
   excalidrawAPI: ExcalidrawImperativeAPI;
@@ -222,6 +294,9 @@ const initializeScene = async (opts: {
   )
 > => {
   const searchParams = new URLSearchParams(window.location.search);
+  if (searchParams.get("ato-demo") === "1") {
+    return { scene: createAtoDemoScene(), isExternalScene: false };
+  }
   const id = searchParams.get("id");
   const jsonBackendMatch = window.location.hash.match(
     /^#json=([a-zA-Z0-9_-]+),([a-zA-Z0-9_-]+)$/,

@@ -1,0 +1,14 @@
+schema_version = "1"
+name = "excalidraw"
+version = "1.0.0"
+
+[run]
+command = ["python3", "server.py"]
+
+[web]
+port = 8080
+bind = "0.0.0.0"
+
+[seal_at]
+command = ["python3", "-c", 'import json,urllib.request; state=json.load(urllib.request.urlopen("http://172.16.0.2:8080/__ato/state",timeout=5)); assert state=={"app":"excalidraw","upstream_commit":"7c0b3295760d3492a980f2f6416a36c9ef592103","demo_scene":"product-flow","assets_ready":True,"external_integrations":False,"runtime_downloads":False}']
+timeout_seconds = 30
