@@ -155,6 +155,8 @@ export default defineConfig(({ mode }) => {
       svgrPlugin(),
       ViteEjsPlugin(),
       VitePWA({
+        // Isolated Ato hosting owns access expiry; do not cache an offline app.
+        disable: true,
         registerType: "autoUpdate",
         devOptions: {
           /* set this flag to true to enable in Development mode */
